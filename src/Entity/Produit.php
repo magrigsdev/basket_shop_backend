@@ -26,9 +26,9 @@ class Produit
     private ?string $prix = null;
 
 
-
-    #[ORM\Column(type:'integer')]
-    private ?int $taille = null;
+    #[ORM\ManyToOne(targetEntity: Taille::class, inversedBy: 'taille')]
+    #[ORM\JoinColumn(name: 'taille_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    private ?int $taille_id = null;
 
     #[ORM\Column(length: 255, nullable: true, type: 'string')]
     private ?string $couleur = null;
@@ -41,15 +41,20 @@ class Produit
     #[ORM\JoinColumn(name: 'categories_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     private ?int $categories_id = null;
 
+    #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'genre')]
+    #[ORM\JoinColumn(name: 'genre_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+    private ?int $genre_id = null;
     /**
      * @var Collection<int, Avis>
      */
     #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'produit_id')]
     private Collection $avis;
 
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
+        $this->id_genre = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,14 +110,14 @@ class Produit
         return $this;
     }
 
-    public function getTaille(): ?int
+    public function getTaille(): ?Taille
     {
-        return $this->taille;
+        return $this->taille_id;
     }
 
-    public function setTaille(int $taille): static
+    public function setTaille(?Taille $taille_id): self
     {
-        $this->taille = $taille;
+        $this->taille_id = $taille_id;
 
         return $this;
     }
@@ -134,6 +139,18 @@ class Produit
         return $this->marque_id;
     }
 
+    public function getGenre(): ?Genre
+    {
+        return $this->genre_id;
+    }
+
+    public function setGenre(?Genre $genre_id): self
+    {
+        $this->genre_id = $genre_id;
+
+        return $this;
+    }
+
     public function setMarqueId(?Marques $marque_id): self
     {
         $this->marque_id = $marque_id;
@@ -149,5 +166,6 @@ class Produit
         return $this->avis;
     }
 
+    
     
 }

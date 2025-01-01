@@ -3,19 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\CategorieRepository;
+use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-#[ORM\Entity(repositoryClass: CategorieRepository::class)]
-class Categorie
+#[ORM\Entity(repositoryClass: GenreRepository::class)]
+class Genre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 200, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     public function getId(): ?int
@@ -28,14 +28,14 @@ class Categorie
         return $this->nom;
     }
 
-    public function setNom(?string $nom): static
+    public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
         return $this;
     }
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    #[ORM\OneToMany(mappedBy: 'genre', targetEntity: Produit::class)]
     private Collection $produits;
 
     public function __construct()
@@ -47,4 +47,5 @@ class Categorie
     {
         return $this->produits;
     }
+
 }

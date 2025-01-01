@@ -2,40 +2,41 @@
 
 namespace App\Entity;
 
+use App\Entity\Produit;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\CategorieRepository;
+use App\Repository\TailleRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-#[ORM\Entity(repositoryClass: CategorieRepository::class)]
-class Categorie
+#[ORM\Entity(repositoryClass: TailleRepository::class)]
+class Taille
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 200, nullable: true)]
-    private ?string $nom = null;
+    #[ORM\Column]
+    private ?int $numero = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getNumero(): ?int
     {
-        return $this->nom;
+        return $this->numero;
     }
 
-    public function setNom(?string $nom): static
+    public function setNumero(int $numero): static
     {
-        $this->nom = $nom;
+        $this->numero = $numero;
 
         return $this;
     }
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: Produit::class)]
     private Collection $produits;
 
     public function __construct()

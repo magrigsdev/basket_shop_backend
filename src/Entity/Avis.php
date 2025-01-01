@@ -37,7 +37,7 @@ class Avis
         return $this->client_id;
     }
 
-    public function setClientId(int $client_id): static
+    public function setClientId(Client $client_id): static
     {
         $this->client_id = $client_id;
 
@@ -61,7 +61,7 @@ class Avis
         return $this->produit_id;
     }
 
-    public function setProduitId(int $produit_id): static
+    public function setProduitId(Produit $produit_id): static
     {
         $this->produit_id = $produit_id;
 
