@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Produit;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TailleRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TailleRepository::class)]
 class Taille
@@ -18,6 +17,17 @@ class Taille
 
     #[ORM\Column]
     private ?int $numero = null;
+
+    /**
+     * @var Collection<int, Produit>
+     */
+    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: Produit::class)]
+    private Collection $produits;
+
+    public function __construct()
+    {
+        $this->produits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,16 +46,13 @@ class Taille
         return $this;
     }
 
-    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: Produit::class)]
-    private Collection $produits;
-
-    public function __construct()
-    {
-        $this->produits = new ArrayCollection();
-    }
-
+    /**
+     * @return Collection<int, Produit>
+     */
     public function getProduits(): Collection
     {
         return $this->produits;
     }
+
+
 }

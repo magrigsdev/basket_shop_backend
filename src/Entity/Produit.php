@@ -26,10 +26,6 @@ class Produit
     private ?string $prix = null;
 
 
-    #[ORM\ManyToOne(targetEntity: Taille::class, inversedBy: 'taille')]
-    #[ORM\JoinColumn(name: 'taille_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
-    private ?int $taille_id = null;
-
     #[ORM\Column(length: 255, nullable: true, type: 'string')]
     private ?string $couleur = null;
 
@@ -49,6 +45,19 @@ class Produit
      */
     #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'produit_id')]
     private Collection $avis;
+
+    #[ORM\ManyToOne(targetEntity:Taille::class, inversedBy:'taille')]
+    // #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'taille_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+
+    private ?int $taille_id = null;
+
+    #[ORM\ManyToOne(targetEntity: ImageProduit::class, inversedBy: 'image_produit')]
+    // #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'image_produit_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
+
+    private ?int $image_produit_id = null;
+  
 
 
     public function __construct()
@@ -110,14 +119,26 @@ class Produit
         return $this;
     }
 
-    public function getTaille(): ?Taille
+    public function getTailleId(): ?Taille
     {
         return $this->taille_id;
     }
 
-    public function setTaille(?Taille $taille_id): self
+    public function setTailleId(?Taille $taille_id): self
     {
         $this->taille_id = $taille_id;
+
+        return $this;
+    }
+
+    public function getImageProduitId(): ?ImageProduit
+    {
+        return $this->image_produit_id;
+    }
+
+    public function setImageProduitId(?ImageProduit $image_produit_id): self
+    {
+        $this->image_produit_id = $image_produit_id;
 
         return $this;
     }
@@ -165,6 +186,9 @@ class Produit
     {
         return $this->avis;
     }
+
+
+
 
     
     

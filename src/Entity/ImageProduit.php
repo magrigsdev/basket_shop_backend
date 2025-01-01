@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImageProduitRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ImageProduitRepository::class)]
 class ImageProduit
@@ -13,25 +15,40 @@ class ImageProduit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $produit_id = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $libelle = null;
 
-    #[ORM\Column(length: 200, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $url = null;
+
+    private Collection $produits;
+
+    public function __construct()
+    {
+        $this->produits = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProduitId(): ?int
+    public function getLibelle(): ?string
     {
-        return $this->produit_id;
+        return $this->libelle;
     }
 
-    public function setProduitId(int $produit_id): static
+    public function setLibelle(?string $libelle): static
     {
-        $this->produit_id = $produit_id;
+        $this->libelle = $libelle;
 
         return $this;
     }
@@ -41,7 +58,7 @@ class ImageProduit
         return $this->url;
     }
 
-    public function setUrl(?string $url): static
+    public function setUrl(string $url): static
     {
         $this->url = $url;
 
