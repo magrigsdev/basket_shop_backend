@@ -31,15 +31,15 @@ class Produit
 
     #[ORM\ManyToOne(targetEntity: Marques::class, inversedBy: 'marques')]
     #[ORM\JoinColumn(name: 'marque_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
-    private ?int $marque_id = null;
+    private ?Marques $marque_id = null;
 
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'categorie')]
     #[ORM\JoinColumn(name: 'categories_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
-    private ?int $categories_id = null;
+    private ?Categorie $categories_id = null;
 
     #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'genre')]
     #[ORM\JoinColumn(name: 'genre_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
-    private ?int $genre_id = null;
+    private ?Genre $genre_id = null;
     /**
      * @var Collection<int, Avis>
      */
@@ -50,13 +50,13 @@ class Produit
     // #[ORM\JoinColumn(nullable: false)]
     #[ORM\JoinColumn(name: 'taille_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
 
-    private ?int $taille_id = null;
+    private ?Taille $taille_id = null;
 
     #[ORM\ManyToOne(targetEntity: ImageProduit::class, inversedBy: 'image_produit')]
     // #[ORM\JoinColumn(nullable: false)]
     #[ORM\JoinColumn(name: 'image_produit_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
 
-    private ?int $image_produit_id = null;
+    private ?ImageProduit $image_produit_id = null;
   
 
 
